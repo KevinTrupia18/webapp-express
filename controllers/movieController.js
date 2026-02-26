@@ -44,4 +44,39 @@ function show(req, res) {
     });
 }
 
-module.exports = { index, show };
+
+// POST - aggiungere recensione
+
+function storeReview(req, res) {
+
+    // Recupero id film
+    const { id } = req.params;
+
+    // Recupero dati dal body
+    const { name, vote, text } = req.body;
+
+    // Query SQL
+    const sql = `
+        INSERT INTO reviews (movie_id, name, vote, text)
+        VALUES (?, ?, ?, ?)
+    `;
+
+    connection.query(sql, [id, name, vote, text], (err, result) => {
+
+        if (err) return res.status(500).json({
+            error: "Database query failed"
+        });
+
+        res.status(201).json({
+            message: "Recensione aggiunta con successo"
+        });
+
+    });
+
+}
+
+module.exports = {
+    index,
+    show,
+    storeReview
+};

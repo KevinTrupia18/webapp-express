@@ -11,4 +11,7 @@ router.get('/', movieController.index);
 // Rotta di show
 router.get('/:id', movieController.show);
 
+
+router.post('/:id/reviews', movieController.storeReview);
+
 module.exports = router;
